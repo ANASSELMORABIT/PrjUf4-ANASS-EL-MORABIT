@@ -1,27 +1,34 @@
 <template>
-<div class="login-dark">
-    <form @submit.prevent="login">
-      <h2>Iniciar Sesión</h2>
-      <div>
-        <label>Email: </label>
-        <input v-model="email" type="email" required />
-      </div>
-      <div>
-        <label>Contraseña: </label>
-        <input id="password" type="password" v-model="password" required />
-      </div>
-      <button type="submit">Entrar</button>
-      <div v-if="error">{{ error }}</div>
-      <hr>
-      <div>
-        <strong>Credenciales de prueba:</strong>
-        <p>Email: admin@example.com</p>
-        <p>Contraseña: password</p>
-      </div>
-      <button type="button" @click="$emit('show-register')" class="register-btn">¿No tienes cuenta? Regístrate</button>
-    </form>
-</div>
+  <div class="login-container">
+    <!-- ✅ Credenciales fuera del login-box, arriba a la derecha -->
+    <div class="demo-credentials">
+      <h3>🧪 Acceso de demostración</h3>
+      <p><strong>Email:</strong> admin@example.com</p>
+      <p><strong>Contraseña:</strong> password</p>
+    </div>
+
+    <div class="login-box">
+      <form @submit.prevent="login">
+        <h2>Iniciar sesión</h2>
+        <div>
+          <label for="email">Correo electrónico</label>
+          <input v-model="email" type="email" id="email" required />
+        </div>
+        <div>
+          <label for="password">Contraseña</label>
+          <input v-model="password" type="password" id="password" required />
+        </div>
+        <button type="submit" class="login-btn">Entrar</button>
+        <div v-if="error" class="error-message">{{ error }}</div>
+        <hr />
+        <button type="button" @click="$emit('show-register')" class="register-btn">
+          ¿No tienes cuenta? Regístrate
+        </button>
+      </form>
+    </div>
+  </div>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';
@@ -41,7 +48,9 @@ async function login() {
     });
     emit('login-success', { token: response.data.token, role: response.data.role });
   } catch (e) {
-    error.value = 'Credencials incorrectas';
+    error.value = 'Credenciales incorrectas';
   }
 }
 </script>
+
+

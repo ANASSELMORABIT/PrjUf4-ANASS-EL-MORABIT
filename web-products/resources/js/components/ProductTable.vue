@@ -10,14 +10,15 @@
       </thead>
       <tbody>
         <tr v-for="product in sortedProducts" :key="product.id">
-          <td>{{ product.name }}</td>
-          <td>{{ product.price }} €</td>
-          <td v-if="userRole==='admin'" class="table-actions">
+          <td :data-label="'Nombre'">{{ product.name }}</td>
+          <td :data-label="'Precio'">{{ product.price }} €</td>
+          <td v-if="userRole==='admin'" class="table-actions" :data-label="'Acciones'">
             <button @click="emit('edit', product)">Editar</button>
             <button @click="deleteProduct(product.id)" class="button-red">Eliminar</button>
           </td>
         </tr>
       </tbody>
+
     </table>
     <div v-if="error" class="mensaje-error">
       {{ error }}

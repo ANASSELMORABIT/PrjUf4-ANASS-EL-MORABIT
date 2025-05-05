@@ -1,17 +1,9 @@
 <template>
   <div>
-
     <login-form v-if="!isAuthenticated && !showRegister" @login-success="onLoginSuccess" @show-register="showRegister = true" />
     <register-form v-if="!isAuthenticated && showRegister" @register-success="showRegister = false" @show-login="showRegister = false" />
+    
     <div v-else>
-
-      <product-table
-        :products="products"
-        :user-role="userRole"
-        :api-token="apiToken"
-        @refresh="fetchProducts"
-        @edit="onEditProduct"
-      />
       <div class="action-bar">
         <button v-if="userRole === 'admin'" class="btn-add" @click="showCreateForm = true; editingProduct = null">Añadir producto</button>
       </div>
@@ -64,9 +56,17 @@
         <button @click="() => { editingProduct = null; editError = ''; }" class="button-cancel">Cancelar</button>
         <div v-if="editError" class="mensaje-error">{{ editError }}</div>
       </div>
+      <product-table
+        :products="products"
+        :user-role="userRole"
+        :api-token="apiToken"
+        @refresh="fetchProducts"
+        @edit="onEditProduct"
+      />
     </div>
   </div>
 </template>
+
 
 <script setup>
 

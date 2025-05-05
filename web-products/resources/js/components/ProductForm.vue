@@ -1,26 +1,32 @@
 <template>
-  <div>
-    <form @submit.prevent="save">
-      <button type="button" @click="$emit('close')">✖</button>
+  <div class="product-form-container">
+    <form @submit.prevent="save" class="product-form">
+      <button type="button" class="btn-close" @click="$emit('close')">✖</button>
       <h3>{{ props.editMode ? 'Editar producto' : 'Añadir producto' }}</h3>
-      <div class="mb-3">
-        <label>Nombre</label>
-        <input v-model="name" required />
+      
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input v-model="name" id="name" required />
       </div>
-      <div class="mb-3">
-        <label>Precio</label>
-        <input v-model.number="price" type="number" step="0.01" required />
+      
+      <div class="form-group">
+        <label for="price">Precio</label>
+        <input v-model.number="price" id="price" type="number" step="0.01" required />
       </div>
-      <div class="mb-3">
-        <label>Descripción</label>
-        <input v-model="description" required />
+      
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <input v-model="description" id="description" required />
       </div>
-      <div class="mb-3">
-        <label>Stock</label>
-        <input v-model.number="stock" type="number" min="0" required />
+      
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <input v-model.number="stock" id="stock" type="number" min="0" required />
       </div>
-      <button type="submit">Guardar</button>
-      <div v-if="error">{{ error }}</div>
+      
+      <button type="submit" class="btn-submit">Guardar</button>
+      
+      <div v-if="error" class="error-message">{{ error }}</div>
     </form>
   </div>
 </template>
@@ -42,6 +48,7 @@ const description = ref(props.initialProduct ? props.initialProduct.description 
 const stock = ref(props.initialProduct ? props.initialProduct.stock : 0);
 const error = ref('');
 
+// Función para guardar el producto
 async function save() {
   error.value = '';
   try {
@@ -71,7 +78,6 @@ async function save() {
     emit('refresh');
     emit('close');
   } catch (e) {
-    // Muestra el mensaje real de la API si existe
     if (e.response && e.response.data && e.response.data.message) {
       error.value = e.response.data.message;
     } else {
